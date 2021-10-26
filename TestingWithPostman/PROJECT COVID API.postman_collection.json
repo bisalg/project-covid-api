@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "e32f7116-fffe-47c1-bf9c-ece5e98bd95d",
+		"name": "PROJECT COVID API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"pm.globals.set(\"accessToken\", jsonData.token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//remove all the comments before sending request !\r\n{\r\n    \"name\":\"name\",\r\n    \"email\":\"email\",            // email has to be unique\r\n    \"password\":\"password\"\r\n}                               //after registering, you can add entries",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/v1/covid/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"pm.globals.set(\"accessToken\", jsonData.token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//remove all the comments before sending request !\r\n{\r\n    \"email\":\"email\",                //enter your registered email\r\n    \"password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/v1/covid/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Vaccination Entry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"aadhaarNo\":\"12digit aadhaar no.\",          // in Number format, has to unique\r\n    \"firstDose\":\"boolean\",                      //boolean format\r\n    \"secondDose\":\"boolean\",\r\n    \"location\":\"location\",                      \r\n    \"vaccinationDate\":\"vaccination date\"          // in string format i.e 'YYYY-MM-DD'\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/v1/covid/user/vaccination",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid",
+						"user",
+						"vaccination"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Vaccination Entries",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/v1/covid/user/vaccination",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid",
+						"user",
+						"vaccination"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Covid Public API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/v1/covid",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Vaccination Entry",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//add _id of the entry you want to update after / in the path\r\n{\r\n    \"any field\":\"value\"     // field you want to update and new value, you can update multiple fields\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/api/v1/covid/user/vaccination/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"covid",
+						"user",
+						"vaccination",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
